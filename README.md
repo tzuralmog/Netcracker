@@ -1,1 +1,2 @@
 # Netcracker
+Bare beginings
