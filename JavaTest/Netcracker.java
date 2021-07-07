@@ -1,11 +1,13 @@
 package JavaTest;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Netcracker {
     public static void main(String[] args) {
 
-        System.out.println("Hello, World.");
+        // System.out.println("Hello, World.");
         Product Alpha = new Product("Alpha", 1.0);
         System.out.println("Name = " + Alpha.Name + " Price = " + Alpha.Price);
 
@@ -14,9 +16,10 @@ public class Netcracker {
         System.out.println("Parent name = " + Beta.Parent.Name + " Name = " + Beta.Name + " Price = " + Beta.Price);
 
         ArrayList<Product> ProductList2 = new ArrayList<Product>();
-        Agreement Omega = new Agreement("Omega", "Tzur", ProductList);
-        System.out.println("Name = " + Omega.Name + " Signed By = " + Beta.Name );
-
+        ProductList2.add(Alpha);
+        ProductList2.add(Beta);
+        Agreement Omega = new Agreement( "Tzur", ProductList2);
+        System.out.println("Name = " + Omega.Name + " Signed By = " + Omega.SignedBy + " Number of products = " + Omega.ProductList.size() );
     }
 }
 
@@ -48,14 +51,22 @@ class Agreement extends Base {
     // public variables
     String SignedBy;
 
-    Agreement( String Name, String SignedBy, ArrayList<Product> ProductList) {
-        this.Name = Name;
+    Agreement(  String SignedBy, ArrayList<Product> ProductList) {
+        // DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDate.now()); 
+        this.Name = "Agreement " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDate.now());
         this.SignedBy = SignedBy;
-        this.ProductList.addAll(ProductList);
+        // this.ProductList.addAll(ProductList);
+        for (Product product : ProductList) {
+            System.out.println(product.Name);
+            if(product.Parent == null){
+                
+                this.ProductList.add(product);
+            }
+        }
     }
 
-    Agreement(String Name, String SignedBy) {
-        this.Name = Name;
+    Agreement( String SignedBy) {
+        this.Name = "Agreement " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDate.now());
         this.SignedBy = SignedBy;
     }
 
