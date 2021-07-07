@@ -3,11 +3,17 @@ package JavaTest;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.xml.*;
 
 public class Netcracker {
     public static void main(String[] args) {
 
-        // System.out.println("Hello, World.");
+        
         Product Alpha = new Product("Alpha", 1.0);
         System.out.println("Name = " + Alpha.Name + " Price = " + Alpha.Price);
 
@@ -20,6 +26,49 @@ public class Netcracker {
         ProductList2.add(Beta);
         Agreement Omega = new Agreement( "Tzur", ProductList2);
         System.out.println("Name = " + Omega.Name + " Signed By = " + Omega.SignedBy + " Number of products = " + Omega.ProductList.size() );
+
+        // System.out.println(System.getProperty("user.dir"));
+        API test = new API();
+        test.storeAgreement(Omega);
+        
+    }
+
+    
+}
+
+class API{
+
+    API(){
+        makeAgreementHome();
+    }
+
+    Boolean makeAgreementHome(){
+        File newDirectory = new File("Agreements");
+        if(newDirectory.isDirectory()){
+            return true;
+        }else{
+            return newDirectory.mkdir();
+        }
+    }
+
+    Boolean storeAgreement(Agreement Omega){
+        File agreementPath = new File(System.getProperty("user.dir")+"\\Agreements\\" + Omega.Name);
+        System.out.println(agreementPath);
+        // Files.createFile(agreementPath,null);
+        try {
+            if(agreementPath.createNewFile()){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            //TODO: handle exception
+            // System.out.println(e);
+            e.printStackTrace();
+            return false;
+        }
+        
+        
     }
 }
 
@@ -53,7 +102,8 @@ class Agreement extends Base {
 
     Agreement(  String SignedBy, ArrayList<Product> ProductList) {
         // DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDate.now()); 
-        this.Name = "Agreement " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDate.now());
+        this.Name = "Agreement " + DateTimeFormatter.ofPattern("dd-MM-yyyy").format(LocalDate.now());
+        // this.Name = this.Name.replace("\\", "/");
         this.SignedBy = SignedBy;
         // this.ProductList.addAll(ProductList);
         for (Product product : ProductList) {
