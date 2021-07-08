@@ -80,8 +80,10 @@ class API {
         }
     }
 
-    Boolean addElement(Node Parent, String ChildName) {
-        return false;
+    Element addElement(Node Parent, String ChildName) {
+        Element newElement = doc.createElement(ChildName);
+        Parent.appendChild(newElement);
+        return newElement;
     }
 
     Boolean addAttribute() {
@@ -99,8 +101,9 @@ class API {
             } 
 
             // root element
-            Element Agreement = doc.createElement("Agreement");
-            doc.appendChild(Agreement);
+            // Element Agreement = doc.createElement("Agreement");
+            Element Agreement = addElement(doc,"Agreement");
+            // doc.appendChild(Agreement);
             Attr attr = doc.createAttribute("company");
             attr.setValue("Ferrari");
             Agreement.setAttributeNode(attr);
