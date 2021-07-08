@@ -1,6 +1,7 @@
 package JavaTest;
 
 import java.util.ArrayList;
+import java.util.jar.Attributes.Name;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.io.File;
@@ -54,7 +55,7 @@ class API {
 
         makeAgreementHome();
         // init variables
-        
+
         // Create XML Document
         buildXMLDocument();
     }
@@ -67,6 +68,7 @@ class API {
             return newDirectory.mkdir();
         }
     }
+
     Boolean buildXMLDocument() {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -74,7 +76,6 @@ class API {
             doc = dBuilder.newDocument();
             return true;
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
             return false;
         }
@@ -86,8 +87,20 @@ class API {
         return newElement;
     }
 
-    Boolean addAttribute() {
-        return false;
+    void addAttribute(Element Parent, String Name, String Value) {
+        Attr attr = doc.createAttribute(Name);
+        attr.setValue(Value);
+        Parent.setAttributeNode(attr);
+        // return attr;
+
+    }
+
+    void addChildProducts (Element XMLParent, Base javaParent) {
+        
+        for (Product javaProduct : javaParent.ProductList) {
+            Element XMLProduct =  addElement(XMLParent, javaProduct.Name);
+            addAttribute(XMLProduct,"Price", String.valueOf(javaProduct.Price));
+        }
 
     }
 
@@ -98,15 +111,14 @@ class API {
         try {
             if (!agreementPath.createNewFile()) {
                 System.out.println("Could not create new file");
-            } 
+            }
 
             // root element
-            // Element Agreement = doc.createElement("Agreement");
-            Element Agreement = addElement(doc,"Agreement");
-            // doc.appendChild(Agreement);
-            Attr attr = doc.createAttribute("company");
-            attr.setValue("Ferrari");
-            Agreement.setAttributeNode(attr);
+            Element Agreement = addElement(doc, "Agreement");
+            // Attr attr = addAttribute(Agreement, "Name", "Value");
+            addAttribute(Agreement, "Name", Omega.Name);
+            addAttribute(Agreement, "SignedBy", Omega.SignedBy);
+
 
             // write the document into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -115,7 +127,6 @@ class API {
             StreamResult result = new StreamResult(agreementPath);
             transformer.transform(source, result);
         } catch (Exception e) {
-            // TODO: handle exception
             // System.out.println(e);
             e.printStackTrace();
             return false;
