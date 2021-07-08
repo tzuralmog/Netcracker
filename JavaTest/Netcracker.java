@@ -35,7 +35,14 @@ public class Netcracker {
         ArrayList<Product> ProductList2 = new ArrayList<Product>();
         ProductList2.add(Alpha);
         ProductList2.add(Beta);
-        Agreement Omega = new Agreement("Tzur", ProductList2);
+        Product Gamma = new Product("Gamma", 3.0, ProductList2);
+        System.out.println("Parent name = " + Beta.Parent.Name + " Name = " + Beta.Name + " Price = " + Beta.Price);
+
+        ArrayList<Product> ProductList3 = new ArrayList<Product>();
+        ProductList3.add(Alpha);
+        ProductList3.add(Beta);
+        ProductList3.add(Gamma);
+        Agreement Omega = new Agreement("Tzur", ProductList3);
         System.out.println("Name = " + Omega.Name + " Signed By = " + Omega.SignedBy + " Number of products = "
                 + Omega.ProductList.size());
 
@@ -98,8 +105,10 @@ class API {
     void addChildProducts (Element XMLParent, Base javaParent) {
         
         for (Product javaProduct : javaParent.ProductList) {
+            System.out.println(javaProduct.Name);
             Element XMLProduct =  addElement(XMLParent, javaProduct.Name);
             addAttribute(XMLProduct,"Price", String.valueOf(javaProduct.Price));
+            addChildProducts(XMLProduct, javaProduct);
         }
 
     }
@@ -109,8 +118,8 @@ class API {
         System.out.println(agreementPath);
         // Files.createFile(agreementPath,null);
         try {
-            if (!agreementPath.createNewFile()) {
-                System.out.println("Could not create new file");
+            if (agreementPath.createNewFile()) {
+                System.out.println("Created new agreement");
             }
 
             // root element
@@ -119,6 +128,8 @@ class API {
             addAttribute(Agreement, "Name", Omega.Name);
             addAttribute(Agreement, "SignedBy", Omega.SignedBy);
 
+            // add children
+            addChildProducts(Agreement,Omega );
 
             // write the document into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -148,6 +159,12 @@ class Product extends Base {
 
     Product(Product Parent, String Name, Double Price, ArrayList<Product> ProductList) {
         this.Parent = Parent;
+        this.Name = Name;
+        this.Price = Price;
+        this.ProductList.addAll(ProductList);
+    }
+
+    Product(String Name, Double Price, ArrayList<Product> ProductList) {
         this.Name = Name;
         this.Price = Price;
         this.ProductList.addAll(ProductList);
