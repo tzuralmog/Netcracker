@@ -85,12 +85,8 @@ class API {
     }
 
     Boolean addAttribute() {
-        File newDirectory = new File("Agreements");
-        if (newDirectory.isDirectory()) {
-            return true;
-        } else {
-            return newDirectory.mkdir();
-        }
+        return false;
+
     }
 
     Boolean storeAgreement(Agreement Omega) {
