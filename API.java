@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -59,14 +60,12 @@ public class API {
         Attr attr = doc.createAttribute(Name);
         attr.setValue(Value);
         Parent.setAttributeNode(attr);
-        // return attr;
 
     }
 
     void addChildProducts(Element XMLParent, Base javaParent) {
 
         for (Product javaProduct : javaParent.ProductList) {
-            // System.out.println(javaProduct.Name);
             String tagName = javaProduct.ProductList.isEmpty() ? "Product" : "ProductParent";
             Element XMLProduct = addElement(XMLParent, tagName);
             addAttribute(XMLProduct, "Name", javaProduct.Name);
@@ -78,7 +77,6 @@ public class API {
 
     void getChildProducts(Element XMLParent, Base javaParent) {
 
-            // NodeList x =  XMLParent.getElementsByTagName("Product");
             NodeList x = XMLParent.getChildNodes();
             for (int i = 0; i < x.getLength(); i++) {
                 Element XMLProduct = (Element)x.item(i);
@@ -88,7 +86,6 @@ public class API {
                 getChildProducts(XMLProduct, javaProduct);
                 // checks if parent is not an agreement.
                 if(!(javaParent instanceof Agreement)){
-                    // System.out.println("Agrrement parent");
                     javaProduct.Parent = javaParent;
                 }
                 javaParent.ProductList.add(javaProduct);
@@ -97,8 +94,6 @@ public class API {
 
     Boolean storeAgreement(Agreement Omega) {
         File agreementPath = new File(System.getProperty("user.dir") + "\\Agreements\\" + Omega.Name);
-        // System.out.println(agreementPath);
-        // Files.createFile(agreementPath,null);
         buildXMLDocument();
         try {
             if (agreementPath.createNewFile()) {
@@ -107,7 +102,6 @@ public class API {
 
             // root element
             Element Agreement = addElement(doc, "Agreement");
-            // Attr attr = addAttribute(Agreement, "Name", "Value");
             addAttribute(Agreement, "Name", Omega.Name);
             addAttribute(Agreement, "SignedBy", Omega.SignedBy);
 
@@ -117,11 +111,11 @@ public class API {
             // write the document into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(agreementPath);
             transformer.transform(source, result);
         } catch (Exception e) {
-            // System.out.println(e);
             e.printStackTrace();
             return false;
         }

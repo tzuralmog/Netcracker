@@ -23,4 +23,6 @@ public class Product extends Base {
         this.Price = Price;
     }
 
+    Product()  {}
+
 }
