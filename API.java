@@ -79,7 +79,6 @@ public class API {
 
             NodeList x = XMLParent.getChildNodes();
             for (int i = 0; i < x.getLength(); i++) {
-                System.out.println(x.item(i));
                 if(x.item(i) instanceof Element){
                     Element XMLProduct = (Element)x.item(i);
                 
