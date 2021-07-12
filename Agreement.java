@@ -18,7 +18,7 @@ public class Agreement extends Base {
     }
 
     Agreement(String SignedBy) {
-        this.Name = "Agreement " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDate.now());
+        this.Name = "Agreement " + DateTimeFormatter.ofPattern("dd-MM-yyyy").format(LocalDate.now());
         this.SignedBy = SignedBy;
     }
 
