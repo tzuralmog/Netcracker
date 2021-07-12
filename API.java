@@ -79,16 +79,20 @@ public class API {
 
             NodeList x = XMLParent.getChildNodes();
             for (int i = 0; i < x.getLength(); i++) {
-                Element XMLProduct = (Element)x.item(i);
+                System.out.println(x.item(i));
+                if(x.item(i) instanceof Element){
+                    Element XMLProduct = (Element)x.item(i);
                 
-                Product javaProduct = new Product(XMLProduct.getAttribute("Name"), Double.parseDouble(XMLProduct.getAttribute("Price")) );
-
-                getChildProducts(XMLProduct, javaProduct);
-                // checks if parent is not an agreement.
-                if(!(javaParent instanceof Agreement)){
-                    javaProduct.Parent = javaParent;
+                    Product javaProduct = new Product(XMLProduct.getAttribute("Name"), Double.parseDouble(XMLProduct.getAttribute("Price")) );
+    
+                    getChildProducts(XMLProduct, javaProduct);
+                    // checks if parent is not an agreement.
+                    if(!(javaParent instanceof Agreement)){
+                        javaProduct.Parent = javaParent;
+                    }
+                    javaParent.ProductList.add(javaProduct);
                 }
-                javaParent.ProductList.add(javaProduct);
+                
             }
     }
 
@@ -132,7 +136,7 @@ public class API {
             File file = new File(path);
             Document doc = dBuilder.parse(file);
             doc.getDocumentElement().normalize();
-            System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
+
 
             Element Agreement = doc.getDocumentElement();
             ArrayList<Product> ProductList = new ArrayList<Product>();

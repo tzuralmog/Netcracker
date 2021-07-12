@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Agreement Name="Agreement 10-07-2021" SignedBy="Tzur">
+    <Product Name="Alpha" Price="1.0"/>
+    <ProductParent Name="Gamma" Price="3.0">
+        <Product Name="Alpha" Price="1.0"/>
+        <Product Name="Beta" Price="2.0"/>
+    </ProductParent>
+</Agreement>
