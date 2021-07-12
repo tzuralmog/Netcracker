@@ -26,9 +26,9 @@ public class Netcracker {
         API test = new API();
         test.storeAgreement(Omega);
 
-        Agreement gottenAgre = test.getAgreement(System.getProperty("user.dir") +"\\Test\\Agreement 10-07-2021");
+        Agreement Delta = test.getAgreement(System.getProperty("user.dir") +"\\Test\\Agreement 10-07-2021");
 
-        test.storeAgreement(gottenAgre);
+        test.storeAgreement(Delta);
 
     }
 
