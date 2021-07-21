@@ -10,9 +10,11 @@ public class Agreement extends Base {
         this.Name = "Agreement " + DateTimeFormatter.ofPattern("dd-MM-yyyy").format(LocalDate.now());
         this.SignedBy = SignedBy;
         for (Product product : ProductList) {
-            if (product.Parent == null) {
+            if (product.getParent() == null) {
 
                 this.ProductList.add(product);
+                product.setParent(this);
+
             }
         }
     }
@@ -20,6 +22,14 @@ public class Agreement extends Base {
     Agreement(String SignedBy) {
         this.Name = "Agreement " + DateTimeFormatter.ofPattern("dd-MM-yyyy").format(LocalDate.now());
         this.SignedBy = SignedBy;
+    }
+
+    public String getSignedBy() {
+        return SignedBy;
+    }
+
+    public void setSignedBy(String signedBy) {
+        SignedBy = signedBy;
     }
 
 }

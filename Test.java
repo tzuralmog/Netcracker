@@ -6,7 +6,6 @@ import java.nio.file.Paths;
 
 public class Test {
     public static void main(String[] args) {
-        System.out.println("Testibng API storage");
         Product Alpha = new Product("Alpha", 1.0);
 
         ArrayList<Product> ProductList = new ArrayList<Product>();

@@ -5,18 +5,19 @@ import java.util.ArrayList;
 public class Netcracker {
     public static void main(String[] args) {
 
-        Base Alpha = new Product("Alpha", 1.0);
+        // Builder ObjectBuilder = new Builder();
 
-        System.out.println(Alpha.getprice());
+        Product Alpha = new Builder().Name("Alpha").Price(1.0).buildProduct();
 
-        // ArrayList<Product> ProductList = new ArrayList<Product>();
+
+        ArrayList<Product> ProductList = new ArrayList<Product>();
         // Product Beta = new Product(Alpha, "Beta", 2.0, ProductList);
+        Product Beta = ObjectBuilder.Parent(Alpha).Name("Beta").Price(2.0).buildProduct();
 
-
-        // ArrayList<Product> ProductList2 = new ArrayList<Product>();
-        // ProductList2.add(Alpha);
-        // ProductList2.add(Beta);
-        // Product Gamma = new Product("Gamma", 3.0, ProductList2);
+        ArrayList<Product> ProductList2 = new ArrayList<Product>();
+        ProductList2.add(Alpha);
+        ProductList2.add(Beta);
+        Product Gamma = new Product("Gamma", 3.0, ProductList2);
 
 
         // ArrayList<Product> ProductList3 = new ArrayList<Product>();

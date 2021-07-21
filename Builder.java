@@ -18,7 +18,7 @@ public class Builder {
         return new Product(Parent,Name,Price,ProductList);
     }
 
-    public Builder name(String Name){
+    public Builder Name(String Name){
         this.Name = Name;
         return this;
     }

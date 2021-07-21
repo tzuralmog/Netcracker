@@ -25,7 +25,20 @@ public class Product extends Base {
 
     Product()  {}
 
-    int getprice(){
-        return 20;
+    public Double getPrice() {
+        return Price;
     }
+
+    public Base getParent() {
+        return Parent;
+    }
+
+    public void setPrice(Double price) {
+        Price = price;
+    }
+
+    public void setParent(Base parent) {
+        Parent = parent;
+    }
+
 }
