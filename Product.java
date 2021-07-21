@@ -5,7 +5,7 @@ public class Product extends Base {
     Base Parent;
     Double Price;
 
-    Product(Product Parent, String Name, Double Price, ArrayList<Product> ProductList) {
+    Product(Base Parent, String Name, Double Price, ArrayList<Product> ProductList) {
         this.Parent = Parent;
         this.Name = Name;
         this.Price = Price;
