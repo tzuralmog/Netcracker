@@ -25,4 +25,7 @@ public class Product extends Base {
 
     Product()  {}
 
+    int getprice(){
+        return 20;
+    }
 }
